@@ -376,7 +376,7 @@
 <copyField source="PID" dest="PID_kw"/>
 
 <!-- Merge mods datecreated fields. -->
-<field name="mods_originInfo_dateCreated_sort" type="tdate" indexed="true" stored="true" multiValued="false" sortMissingLast="true"/>
+<field name="mods_originInfo_dateCreated_sort" type="date" indexed="true" stored="true" multiValued="false" sortMissingLast="true"/>
 <copyField source="mods_originInfo_encoding_iso8601_dateCreated_dt" dest="mods_originInfo_dateCreated_sort"/>
 <copyField source="mods_originInfo_encoding_iso8601_keyDate_yes_dateCreated_dt" dest="mods_originInfo_dateCreated_sort"/>
 <copyField source="mods_originInfo_encoding_w3cdtf_dateCreated_dt" dest="mods_originInfo_dateCreated_sort"/>
