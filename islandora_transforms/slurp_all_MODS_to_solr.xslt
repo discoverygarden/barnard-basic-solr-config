@@ -28,6 +28,29 @@
       <xsl:with-param name="pid" select="../../@PID"/>
       <xsl:with-param name="datastream" select="../@ID"/>
     </xsl:apply-templates>
+
+    <xsl:apply-templates mode="barnard_slurping_MODS" select="$content//mods:mods[1]" />
+  </xsl:template>
+
+  <!-- Custom Barnard date sorting field -->
+  <xsl:template match="mods:originInfo/mods:dateCreated" mode="barnard_slurping_MODS">
+    <xsl:variable name="textValue">
+      <xsl:call-template name="get_ISO8601_date">
+        <xsl:with-param name="date" select="normalize-space(text())"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:if test="not(normalize-space($textValue)='')">
+      <xsl:variable name="field_name_sort">mods_originInfo_dateCreated_sort</xsl:variable>
+      <xsl:if test="java:add($single_valued_hashset, $field_name_sort)">
+        <field>
+          <xsl:attribute name="name">
+            <xsl:value-of select="$field_name_sort"/>
+          </xsl:attribute>
+          <xsl:value-of select="$textValue"/>
+        </field>
+      </xsl:if>
+    </xsl:if>
   </xsl:template>
 
   <!-- Handle dates. -->
@@ -103,6 +126,7 @@
 
   <!-- Avoid using text alone. -->
   <xsl:template match="text()" mode="slurping_MODS"/>
+  <xsl:template match="text()" mode="barnard_slurping_MODS"/>
 
   <!-- Build up the list prefix with the element context. -->
   <xsl:template match="*" mode="slurping_MODS">
